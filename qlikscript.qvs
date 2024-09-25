@@ -1,0 +1,38 @@
+// Establish connection to the database
+LIB CONNECT TO 'DatabaseConnection';  // Replace 'DatabaseConnection' with the actual connection name
+
+// Load the optimized data from the SQL table
+OptimizedData:
+LOAD 
+    product_id,
+    category,
+    quantity_sold,
+    optimal_stock;
+SQL SELECT 
+    product_id, 
+    category, 
+    quantity_sold, 
+    optimal_stock
+FROM optimized_inventory_table;  // Replace with your actual table name
+
+// You can also rename columns if necessary:
+RENAME FIELD product_id TO ProductID;
+RENAME FIELD category TO Category;
+RENAME FIELD quantity_sold TO QuantitySold;
+RENAME FIELD optimal_stock TO OptimalStock;
+
+// Optional: Perform additional calculations or transformations in Qlik Sense
+InventoryAnalysis:
+LOAD 
+    ProductID,
+    Category,
+    QuantitySold,
+    OptimalStock,
+    (QuantitySold - OptimalStock) AS InventoryGap  // Example calculation
+RESIDENT OptimizedData;
+
+// Drop temporary tables if no longer needed
+DROP TABLE OptimizedData;
+
+TRACE ;
+LET a = 0;
