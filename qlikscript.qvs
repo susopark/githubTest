@@ -36,3 +36,5 @@ DROP TABLE OptimizedData;
 
 TRACE ;
 LET a = 0;
+
+LET b = now();
